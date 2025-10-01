@@ -3,12 +3,15 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables (only for local development)
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 // Debug: Check if JWT_SECRET is loaded
 console.log('🔐 JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO');
 console.log('🔐 JWT_SECRET length:', process.env.JWT_SECRET?.length || 0);
+console.log('🌍 Environment:', process.env.NODE_ENV || 'development');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
