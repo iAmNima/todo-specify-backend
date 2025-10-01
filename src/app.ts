@@ -17,12 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors({
-  origin: true, // Allow all origins temporarily to test
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors()); // Simple CORS - allow all
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,8 +42,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/todos', todoRoutes);
 app.use('/api/categories', categoryRoutes);
 
+app.get('/', (req, res) => {
+  res.json({ status: 'OK', message: 'Todo API Server is running', timestamp: new Date().toISOString() });
+});
+
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server is running' });
+  res.json({ status: 'OK', message: 'Server is running', timestamp: new Date().toISOString() });
 });
 
 // Error handling middleware
